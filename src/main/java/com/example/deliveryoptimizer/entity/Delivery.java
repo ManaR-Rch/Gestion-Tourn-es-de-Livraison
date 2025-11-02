@@ -23,6 +23,11 @@ public class Delivery {
     private double volume;
 
     private String status;
+    
+    // Many-to-one relation: a delivery can belong to one Tour (route)
+    @javax.persistence.ManyToOne
+    @javax.persistence.JoinColumn(name = "tour_id")
+    private Tour tour;
 
     public Delivery() {
     }
@@ -96,5 +101,13 @@ public class Delivery {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 }
