@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- DataSource pour H2 en mémoire -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- JPA vendor adapter -->
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect"/>
+        <property name="showSql" value="true"/>
+        <property name="generateDdl" value="true"/>
+    </bean>
+
+    <!-- EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="packagesToScan" value="com.example.demo.model"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.hbm2ddl.auto" value="update"/>
+                <entry key="hibernate.show_sql" value="true"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Transaction manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- TransactionTemplate pour usage programmatique -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <constructor-arg ref="transactionManager"/>
+    </bean>
+
+    <!-- Shared EntityManager bean (proxy) pour être injecté dans les repositories -->
+    <bean id="entityManager" class="org.springframework.orm.jpa.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Repository bean (pas d'annotations : injection via constructeur ici) -->
+    <bean id="userRepository" class="com.example.demo.repository.UserRepositoryImpl">
+        <constructor-arg ref="entityManager"/>
+        <constructor-arg ref="transactionTemplate"/>
+    </bean>
+
+    <!-- Controller bean (pas d'annotations). Bean name used in URL mapping below. -->
+    <bean id="userController" class="com.example.demo.web.UserController">
+        <constructor-arg ref="userRepository"/>
+    </bean>
+
+    <!-- Map URL to controller bean -->
+    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="0" />
+        <property name="mappings">
+            <props>
+                <prop key="/api/users">userController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Adapter to invoke Controller implementations -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+</beans>
