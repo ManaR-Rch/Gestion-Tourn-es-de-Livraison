@@ -42,12 +42,12 @@ Ce projet illustre une approche **sans annotations d'injection** (`@Autowired`, 
 ### Diagramme UML
 
 > 📊 **Ajouter votre diagramme UML ici**
-> 
+>
 > ```
-> ![Diagramme UML](docs/uml-diagram.png)
+> ![Diagramme UML](uml.png)
 > ```
-> 
-> *Placez votre image dans le dossier `docs/` et décommentez la ligne ci-dessus*
+>
+> _Placez votre image dans le dossier `docs/` et décommentez la ligne ci-dessus_
 
 ### Structure du projet
 
@@ -84,13 +84,13 @@ delivery-tour-optimizer/
 
 ### Technologies utilisées
 
-| Technologie | Version | Usage |
-|------------|---------|-------|
-| **Java** | 17 | Langage de programmation |
-| **Spring Boot** | 3.x | Framework principal |
-| **Spring Data JPA** | 3.x | Couche de persistance |
-| **H2 Database** | 2.x | Base de données en mémoire |
-| **Maven** | 3.6+ | Gestionnaire de dépendances |
+| Technologie         | Version | Usage                       |
+| ------------------- | ------- | --------------------------- |
+| **Java**            | 17      | Langage de programmation    |
+| **Spring Boot**     | 3.x     | Framework principal         |
+| **Spring Data JPA** | 3.x     | Couche de persistance       |
+| **H2 Database**     | 2.x     | Base de données en mémoire  |
+| **Maven**           | 3.6+    | Gestionnaire de dépendances |
 
 ---
 
@@ -125,7 +125,7 @@ mvn spring-boot:run
 |-------|--------|
 | JDBC URL | `jdbc:h2:mem:testdb` |
 | Username | `sa` |
-| Password | *(vide)* |
+| Password | _(vide)_ |
 
 ---
 
@@ -135,25 +135,25 @@ mvn spring-boot:run
 
 #### 🏢 Warehouses (Entrepôts)
 
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| `GET` | `/api/warehouses` | Liste tous les entrepôts |
-| `POST` | `/api/warehouses` | Crée un nouvel entrepôt |
+| Méthode | Endpoint          | Description              |
+| ------- | ----------------- | ------------------------ |
+| `GET`   | `/api/warehouses` | Liste tous les entrepôts |
+| `POST`  | `/api/warehouses` | Crée un nouvel entrepôt  |
 
 #### 📦 Deliveries (Livraisons)
 
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| `GET` | `/api/deliveries` | Liste toutes les livraisons |
-| `POST` | `/api/deliveries` | Crée une nouvelle livraison |
-| `PUT` | `/api/deliveries/{id}` | Met à jour une livraison |
-| `DELETE` | `/api/deliveries/{id}` | Supprime une livraison |
+| Méthode  | Endpoint               | Description                 |
+| -------- | ---------------------- | --------------------------- |
+| `GET`    | `/api/deliveries`      | Liste toutes les livraisons |
+| `POST`   | `/api/deliveries`      | Crée une nouvelle livraison |
+| `PUT`    | `/api/deliveries/{id}` | Met à jour une livraison    |
+| `DELETE` | `/api/deliveries/{id}` | Supprime une livraison      |
 
 #### 🗺️ Tours (Tournées)
 
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| `POST` | `/api/tours/optimize` | Optimise une tournée |
+| Méthode | Endpoint              | Description          |
+| ------- | --------------------- | -------------------- |
+| `POST`  | `/api/tours/optimize` | Optimise une tournée |
 
 ---
 
@@ -173,6 +173,7 @@ curl.exe -X POST http://localhost:8080/api/warehouses `
 ```
 
 **Réponse** :
+
 ```json
 {
   "id": 1,
@@ -210,6 +211,7 @@ curl.exe -X POST http://localhost:8080/api/tours/optimize `
 ```
 
 **Paramètres `optimizer` disponibles** :
+
 - `NEAREST` - Algorithme du plus proche voisin
 - `CLARKE_WRIGHT` - Algorithme Clarke-Wright
 
@@ -264,7 +266,7 @@ Tous les beans sont déclarés dans `src/main/resources/applicationContext.xml` 
 ## 📝 Notes importantes
 
 > ⚠️ **Configuration XML pure**
-> 
+>
 > Ce projet n'utilise **aucune annotation d'injection** (`@Autowired`, `@Service`, `@Repository`, `@Controller`) pour les beans métier. Cette approche permet de comprendre la configuration déclarative traditionnelle de Spring.
 
 - 📌 Tous les beans sont dans `applicationContext.xml`
