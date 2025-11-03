@@ -35,6 +35,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <!-- JUnit 5 for unit testing (no Mockito) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,6 +54,12 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+            <!-- Configure Surefire to run JUnit 5 tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
