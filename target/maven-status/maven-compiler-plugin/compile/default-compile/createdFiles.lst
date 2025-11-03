@@ -21,4 +21,5 @@ com\example\deliveryoptimizer\repository\VehicleRepository.class
 com\example\deliveryoptimizer\repository\DeliveryRepository.class
 com\example\deliveryoptimizer\util\DistanceUtils.class
 com\example\deliveryoptimizer\entity\Warehouse.class
+com\example\deliveryoptimizer\config\OpenApiConfig.class
 com\example\deliveryoptimizer\service\impl\TourServiceImpl.class
