@@ -85,11 +85,7 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
         savings.sort((a, b) -> Double.compare(b.s, a.s));
 
         // Helper: find route index and whether delivery is at start or end
-        class RoutePos {
-            int routeIdx;
-            boolean atStart;
-            boolean atEnd;
-        }
+        // (Use the class-level nested RoutePos defined below)
 
         // Try to merge routes according to savings
         for (Saving sv : savings) {
