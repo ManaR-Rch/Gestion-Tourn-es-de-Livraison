@@ -79,11 +79,23 @@
         <property name="mappings">
             <props>
                 <prop key="/api/tours/optimize">tourController</prop>
+                <prop key="/api/deliveries">deliveryController</prop>
+                <prop key="/api/deliveries/*">deliveryController</prop>
+                <prop key="/api/warehouses">warehouseController</prop>
             </props>
         </property>
     </bean>
 
     <!-- Adapter to invoke Controller implementations -->
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <!-- Delivery and Warehouse controller beans -->
+    <bean id="deliveryController" class="com.example.deliveryoptimizer.controller.DeliveryController">
+        <constructor-arg ref="deliveryRepository"/>
+    </bean>
+
+    <bean id="warehouseController" class="com.example.deliveryoptimizer.controller.WarehouseController">
+        <constructor-arg ref="warehouseRepository"/>
+    </bean>
 
 </beans>
