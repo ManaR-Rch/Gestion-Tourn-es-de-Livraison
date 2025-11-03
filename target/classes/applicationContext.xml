@@ -49,7 +49,8 @@
     </bean>
 
     <!-- Shared EntityManager bean (proxy) pour être injecté dans les repositories -->
-    <bean id="entityManager" class="org.springframework.orm.jpa.SharedEntityManagerBean">
+    <!-- Note: correct class is in the 'support' package -->
+    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
