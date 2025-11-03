@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!-- applicationContext.xml intentionally left empty for now -->
+    <!-- DataSource pour H2 en mémoire -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- JPA vendor adapter -->
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect"/>
+        <property name="showSql" value="true"/>
+        <property name="generateDdl" value="true"/>
+    </bean>
+
+    <!-- EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="packagesToScan" value="com.example.deliveryoptimizer.entity"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.hbm2ddl.auto" value="update"/>
+                <entry key="hibernate.show_sql" value="true"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Transaction manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- TransactionTemplate pour usage programmatique -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <constructor-arg ref="transactionManager"/>
+    </bean>
+
+    <!-- Shared EntityManager bean (proxy) pour être injecté dans les repositories -->
+    <bean id="entityManager" class="org.springframework.orm.jpa.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Enable Spring Data JPA repositories in the repository package -->
+    <jpa:repositories base-package="com.example.deliveryoptimizer.repository"/>
+
+    <!-- Optimizer beans -->
+    <bean id="nearestNeighborOptimizer" class="com.example.deliveryoptimizer.service.impl.NearestNeighborOptimizer"/>
+    <bean id="clarkeWrightOptimizer" class="com.example.deliveryoptimizer.service.impl.ClarkeWrightOptimizer"/>
+
+    <!-- TourService bean: inject default optimizer (clarke) then nearest as second arg -->
+    <bean id="tourService" class="com.example.deliveryoptimizer.service.impl.TourServiceImpl">
+        <constructor-arg ref="clarkeWrightOptimizer"/>
+        <constructor-arg ref="nearestNeighborOptimizer"/>
+    </bean>
+
+    <!-- Repositories are created automatically by Spring Data; controller bean references them by name -->
+    <bean id="tourController" class="com.example.deliveryoptimizer.controller.TourController">
+        <constructor-arg ref="deliveryRepository"/>
+        <constructor-arg ref="warehouseRepository"/>
+        <constructor-arg ref="tourService"/>
+    </bean>
+
+    <!-- Map URL to controller bean -->
+    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="0" />
+        <property name="mappings">
+            <props>
+                <prop key="/api/tours/optimize">tourController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Adapter to invoke Controller implementations -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
 
 </beans>
 <?xml version="1.0" encoding="UTF-8"?>
