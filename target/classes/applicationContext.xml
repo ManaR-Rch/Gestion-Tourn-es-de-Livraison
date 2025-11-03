@@ -64,6 +64,7 @@
     <bean id="tourService" class="com.example.deliveryoptimizer.service.impl.TourServiceImpl">
         <constructor-arg ref="clarkeWrightOptimizer"/>
         <constructor-arg ref="nearestNeighborOptimizer"/>
+        <constructor-arg ref="tourRepository"/>
     </bean>
 
     <!-- Repositories are created automatically by Spring Data; controller bean references them by name -->
