@@ -6,7 +6,8 @@ import java.util.List;
 
 /**
  * Repository interface for Delivery entities.
- * Spring Data JPA will provide an implementation at runtime when repositories are enabled.
+ * Spring Data JPA will provide an implementation at runtime when repositories
+ * are enabled.
  */
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     // Example derived query method: find deliveries by status

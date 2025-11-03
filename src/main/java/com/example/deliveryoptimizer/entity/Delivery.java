@@ -23,7 +23,7 @@ public class Delivery {
     private double volume;
 
     private String status;
-    
+
     // Many-to-one relation: a delivery can belong to one Tour (route)
     @javax.persistence.ManyToOne
     @javax.persistence.JoinColumn(name = "tour_id")
@@ -33,7 +33,8 @@ public class Delivery {
     }
 
     /**
-     * Constructor without id (used when creating new Delivery objects before persisting).
+     * Constructor without id (used when creating new Delivery objects before
+     * persisting).
      */
     public Delivery(double latitude, double longitude, double weight, double volume, String status) {
         this.latitude = latitude;

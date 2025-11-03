@@ -13,22 +13,24 @@ public class DeliveryMapper {
      * Convert entity to DTO. Returns null if input is null.
      */
     public static DeliveryDto toDto(Delivery e) {
-        if (e == null) return null;
+        if (e == null)
+            return null;
         return new DeliveryDto(
                 e.getId(),
                 e.getLatitude(),
                 e.getLongitude(),
                 e.getWeight(),
                 e.getVolume(),
-                e.getStatus()
-        );
+                e.getStatus());
     }
 
     /**
-     * Convert DTO to entity. If dto.getId() is null, entity id remains null (new entity).
+     * Convert DTO to entity. If dto.getId() is null, entity id remains null (new
+     * entity).
      */
     public static Delivery toEntity(DeliveryDto d) {
-        if (d == null) return null;
+        if (d == null)
+            return null;
         Delivery e = new Delivery();
         e.setId(d.getId());
         e.setLatitude(d.getLatitude());

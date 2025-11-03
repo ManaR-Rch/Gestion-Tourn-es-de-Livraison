@@ -12,8 +12,9 @@ import java.util.List;
  *
  * Algorithm:
  * - Start at the warehouse coordinates
- * - While there remain unvisited deliveries, pick the closest (Haversine distance)
- *   to the current point and mark it visited; append it to the result list.
+ * - While there remain unvisited deliveries, pick the closest (Haversine
+ * distance)
+ * to the current point and mark it visited; append it to the result list.
  * - Return the ordered list of deliveries. (Returning to warehouse is implicit)
  *
  * Complexity: O(n^2) in number of deliveries.
@@ -41,7 +42,8 @@ public class NearestNeighborOptimizer implements TourOptimizer {
             for (int i = 0; i < remaining.size(); i++) {
                 Delivery d = remaining.get(i);
                 double dist = distance(curLat, curLon, d.getLatitude(), d.getLongitude());
-                // deterministic tie-breaker: if equal distance, choose smaller id (if available)
+                // deterministic tie-breaker: if equal distance, choose smaller id (if
+                // available)
                 if (dist < bestDist || (dist == bestDist && tieBreak(d, remaining.get(bestIndex)))) {
                     bestDist = dist;
                     bestIndex = i;
@@ -61,15 +63,20 @@ public class NearestNeighborOptimizer implements TourOptimizer {
     }
 
     /**
-     * Deterministic tie-breaker: prefer delivery with smaller id when both non-null.
+     * Deterministic tie-breaker: prefer delivery with smaller id when both
+     * non-null.
      */
     private boolean tieBreak(Delivery candidate, Delivery currentBest) {
-        if (currentBest == null) return true;
+        if (currentBest == null)
+            return true;
         Long cid = candidate.getId();
         Long bid = currentBest.getId();
-        if (cid == null && bid == null) return false; // keep existing
-        if (cid == null) return false;
-        if (bid == null) return true;
+        if (cid == null && bid == null)
+            return false; // keep existing
+        if (cid == null)
+            return false;
+        if (bid == null)
+            return true;
         return cid.compareTo(bid) < 0;
     }
 
@@ -83,8 +90,8 @@ public class NearestNeighborOptimizer implements TourOptimizer {
         double Δφ = Math.toRadians(lat2 - lat1);
         double Δλ = Math.toRadians(lon2 - lon1);
 
-        double a = Math.sin(Δφ/2) * Math.sin(Δφ/2)
-                + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+        double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2)
+                + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
