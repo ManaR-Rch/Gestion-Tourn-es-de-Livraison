@@ -13,8 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Simple TourService implementation that delegates to one of the provided TourOptimizer implementations.
- * Note: beans (optimizers and this service) should be configured in XML (`applicationContext.xml`).
+ * Simple TourService implementation that delegates to one of the provided
+ * TourOptimizer implementations.
+ * Note: beans (optimizers and this service) should be configured in XML
+ * (`applicationContext.xml`).
  */
 public class TourServiceImpl implements TourService {
 
@@ -23,13 +25,18 @@ public class TourServiceImpl implements TourService {
     private final TourRepository tourRepository;
 
     /**
-     * Constructor: pass the default optimizer first (e.g. ClarkeWright), then any other optimizer(s),
-     * and finally the TourRepository for persisting generated tours. Beans must be wired in XML.
+     * Constructor: pass the default optimizer first (e.g. ClarkeWright), then any
+     * other optimizer(s),
+     * and finally the TourRepository for persisting generated tours. Beans must be
+     * wired in XML.
      */
-    public TourServiceImpl(TourOptimizer defaultOptimizer, TourOptimizer otherOptimizer, TourRepository tourRepository) {
+    public TourServiceImpl(TourOptimizer defaultOptimizer, TourOptimizer otherOptimizer,
+            TourRepository tourRepository) {
         this.defaultOptimizer = defaultOptimizer;
-        if (defaultOptimizer != null) this.optimizers.put("CLARKE", defaultOptimizer);
-        if (otherOptimizer != null) this.optimizers.put("NEAREST", otherOptimizer);
+        if (defaultOptimizer != null)
+            this.optimizers.put("CLARKE", defaultOptimizer);
+        if (otherOptimizer != null)
+            this.optimizers.put("NEAREST", otherOptimizer);
         this.tourRepository = tourRepository;
     }
 
@@ -38,7 +45,8 @@ public class TourServiceImpl implements TourService {
         TourOptimizer opt = defaultOptimizer;
         if (optimizerName != null) {
             TourOptimizer chosen = optimizers.get(optimizerName.toUpperCase());
-            if (chosen != null) opt = chosen;
+            if (chosen != null)
+                opt = chosen;
         }
 
         // vehicleId can be used to lookup vehicle capacity / constraints in future
@@ -54,10 +62,12 @@ public class TourServiceImpl implements TourService {
                     tour.addDelivery(d);
                 }
             }
-            // save tour (will cascade to deliveries because of CascadeType.ALL on Tour.deliveries)
+            // save tour (will cascade to deliveries because of CascadeType.ALL on
+            // Tour.deliveries)
             tourRepository.save(tour);
         } catch (Exception ex) {
-            // swallow persistence exceptions to keep previous behaviour (still return ordered list)
+            // swallow persistence exceptions to keep previous behaviour (still return
+            // ordered list)
             // In future we can log this exception or propagate depending on requirements.
         }
 
@@ -66,7 +76,8 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public double getTotalDistance(List<Delivery> deliveries, Warehouse warehouse) {
-        if (deliveries == null || deliveries.isEmpty()) return 0.0;
+        if (deliveries == null || deliveries.isEmpty())
+            return 0.0;
         double total = 0.0;
         double curLat = warehouse != null ? warehouse.getLatitude() : deliveries.get(0).getLatitude();
         double curLon = warehouse != null ? warehouse.getLongitude() : deliveries.get(0).getLongitude();
@@ -78,7 +89,8 @@ public class TourServiceImpl implements TourService {
         }
         // return to warehouse
         if (warehouse != null) {
-            total += NearestNeighborOptimizer.distance(curLat, curLon, warehouse.getLatitude(), warehouse.getLongitude());
+            total += NearestNeighborOptimizer.distance(curLat, curLon, warehouse.getLatitude(),
+                    warehouse.getLongitude());
         }
         return total;
     }

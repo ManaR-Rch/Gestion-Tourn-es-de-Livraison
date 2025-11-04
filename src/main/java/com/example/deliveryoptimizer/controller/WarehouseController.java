@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Simple WarehouseController (XML-configured):
- * - GET  /api/warehouses -> list all warehouses
+ * - GET /api/warehouses -> list all warehouses
  * - POST /api/warehouses -> create a warehouse
  *
  * No @Autowired: repository injected via constructor and bean declared in XML.
@@ -49,11 +49,13 @@ public class WarehouseController implements Controller {
             }
 
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "method not allowed"));
+            mapper.writeValue(response.getOutputStream(),
+                    java.util.Collections.singletonMap("error", "method not allowed"));
             return null;
         } catch (IOException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
+            mapper.writeValue(response.getOutputStream(),
+                    java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
             return null;
         }
     }

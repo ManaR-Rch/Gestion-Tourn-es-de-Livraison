@@ -14,12 +14,13 @@ import java.util.Optional;
 
 /**
  * Simple DeliveryController (XML-configured) exposing REST-like endpoints:
- * - GET  /api/deliveries         -> list all deliveries
- * - POST /api/deliveries         -> create a delivery (body: Delivery JSON)
- * - PUT  /api/deliveries/{id}    -> update an existing delivery
- * - DELETE /api/deliveries/{id}  -> delete by id
+ * - GET /api/deliveries -> list all deliveries
+ * - POST /api/deliveries -> create a delivery (body: Delivery JSON)
+ * - PUT /api/deliveries/{id} -> update an existing delivery
+ * - DELETE /api/deliveries/{id} -> delete by id
  *
- * No @Autowired: repositories are injected via constructor and beans are declared
+ * No @Autowired: repositories are injected via constructor and beans are
+ * declared
  * in applicationContext.xml.
  */
 public class DeliveryController implements Controller {
@@ -60,7 +61,8 @@ public class DeliveryController implements Controller {
                 Long id = tryParseId(idStr);
                 if (id == null) {
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "invalid id"));
+                    mapper.writeValue(response.getOutputStream(),
+                            java.util.Collections.singletonMap("error", "invalid id"));
                     return null;
                 }
 
@@ -68,7 +70,8 @@ public class DeliveryController implements Controller {
                     Optional<Delivery> existing = deliveryRepository.findById(id);
                     if (!existing.isPresent()) {
                         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                        mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "not found"));
+                        mapper.writeValue(response.getOutputStream(),
+                                java.util.Collections.singletonMap("error", "not found"));
                         return null;
                     }
                     Delivery upd = mapper.readValue(request.getInputStream(), Delivery.class);
@@ -93,12 +96,14 @@ public class DeliveryController implements Controller {
 
             // If no rule matched
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "method not allowed"));
+            mapper.writeValue(response.getOutputStream(),
+                    java.util.Collections.singletonMap("error", "method not allowed"));
             return null;
 
         } catch (IOException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
+            mapper.writeValue(response.getOutputStream(),
+                    java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
             return null;
         }
     }

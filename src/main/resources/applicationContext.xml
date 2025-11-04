@@ -91,6 +91,7 @@
                 <prop key="/api/tours/optimize">tourController</prop>
                 <prop key="/api/deliveries">deliveryController</prop>
                 <prop key="/api/deliveries/*">deliveryController</prop>
+                <prop key="/api/vehicles/by-type">vehicleController</prop>
                 <prop key="/api/warehouses">warehouseController</prop>
             </props>
         </property>
@@ -106,6 +107,15 @@
 
     <bean id="warehouseController" class="com.example.deliveryoptimizer.controller.WarehouseController">
         <constructor-arg ref="warehouseRepository"/>
+    </bean>
+
+    <!-- Vehicle service and controller (XML-wired) -->
+    <bean id="vehicleService" class="com.example.deliveryoptimizer.service.impl.VehicleServiceImpl">
+        <constructor-arg ref="vehicleRepository"/>
+    </bean>
+
+    <bean id="vehicleController" class="com.example.deliveryoptimizer.controller.VehicleController">
+        <constructor-arg ref="vehicleService"/>
     </bean>
 
 </beans>
