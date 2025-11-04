@@ -48,6 +48,14 @@
         <constructor-arg ref="transactionManager"/>
     </bean>
 
+    <!-- Enable processing of @Configuration classes defined as beans in XML -->
+    <!-- This allows us to register the Java-based OpenApiConfig beans while keeping XML wiring -->
+    <bean class="org.springframework.context.annotation.ConfigurationClassPostProcessor"/>
+
+    <!-- Register the Java OpenAPI configuration so its @Bean methods (openAPI, manualPaths, publicApi)
+         are processed and appear in the ApplicationContext without changing controllers or XML wiring. -->
+    <bean class="com.example.deliveryoptimizer.config.OpenApiConfig"/>
+
     <!-- Shared EntityManager bean (proxy) pour être injecté dans les repositories -->
     <!-- Note: correct class is in the 'support' package -->
     <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
