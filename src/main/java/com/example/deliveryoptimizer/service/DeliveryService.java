@@ -14,11 +14,11 @@ import java.util.Optional;
  */
 public interface DeliveryService {
 
-    List<Delivery> findAll();
+  List<Delivery> findAll();
 
-    Optional<Delivery> findById(Long id);
+  Optional<Delivery> findById(Long id);
 
-    Delivery save(Delivery delivery);
+  Delivery save(Delivery delivery);
 
-    void deleteById(Long id);
+  void deleteById(Long id);
 }
