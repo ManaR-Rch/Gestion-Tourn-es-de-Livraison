@@ -2,6 +2,8 @@ package com.example.deliveryoptimizer.repository;
 
 import com.example.deliveryoptimizer.entity.Delivery;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
 /**
@@ -12,4 +14,5 @@ import java.util.List;
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     // Example derived query method: find deliveries by status
     List<Delivery> findByStatus(String status);
+
 }

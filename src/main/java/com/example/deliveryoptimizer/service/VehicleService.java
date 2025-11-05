@@ -8,10 +8,11 @@ import java.util.List;
  */
 public interface VehicleService {
 
-    /**
-     * Return vehicles of the given type, sorted by capacityWeight descending.
-     * @param type vehicle type string, e.g. "VAN"
-     * @return list of vehicles sorted by capacityWeight descending
-     */
-    List<Vehicle> getVehiclesByType(String type);
+  /**
+   * Return vehicles of the given type, sorted by capacityWeight descending.
+   * 
+   * @param type vehicle type string, e.g. "VAN"
+   * @return list of vehicles sorted by capacityWeight descending
+   */
+  List<Vehicle> getVehiclesByType(String type);
 }

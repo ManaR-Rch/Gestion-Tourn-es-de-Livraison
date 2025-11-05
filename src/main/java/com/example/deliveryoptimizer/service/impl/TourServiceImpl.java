@@ -26,8 +26,6 @@ public class TourServiceImpl implements TourService {
 
     /**
      * Constructor: pass the default optimizer first (e.g. ClarkeWright), then any
-     * other optimizer(s),
-     * and finally the TourRepository for persisting generated tours. Beans must be
      * wired in XML.
      */
     public TourServiceImpl(TourOptimizer defaultOptimizer, TourOptimizer otherOptimizer,

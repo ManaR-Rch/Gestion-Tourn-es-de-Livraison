@@ -15,40 +15,42 @@ import java.util.List;
  */
 public class VehicleController implements Controller {
 
-    private final VehicleService vehicleService;
-    private final ObjectMapper mapper = new ObjectMapper();
+  private final VehicleService vehicleService;
+  private final ObjectMapper mapper = new ObjectMapper();
 
-    public VehicleController(VehicleService vehicleService) {
-        this.vehicleService = vehicleService;
-    }
+  public VehicleController(VehicleService vehicleService) {
+    this.vehicleService = vehicleService;
+  }
 
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        response.setContentType("application/json;charset=UTF-8");
+  @Override
+  public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    response.setContentType("application/json;charset=UTF-8");
 
-        String method = request.getMethod();
-        String path = request.getRequestURI();
+    String method = request.getMethod();
+    String path = request.getRequestURI();
 
-        try {
-            if ("GET".equalsIgnoreCase(method) && "/api/vehicles/by-type".equals(path)) {
-                String type = request.getParameter("type");
-                if (type == null || type.trim().isEmpty()) {
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "missing required parameter 'type'"));
-                    return null;
-                }
-                List<Vehicle> result = vehicleService.getVehiclesByType(type.trim());
-                mapper.writeValue(response.getOutputStream(), result);
-                return null;
-            }
-
-            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "method not allowed"));
-            return null;
-        } catch (Exception ex) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "server error: " + ex.getMessage()));
-            return null;
+    try {
+      if ("GET".equalsIgnoreCase(method) && "/api/vehicles/by-type".equals(path)) {
+        String type = request.getParameter("type");
+        if (type == null || type.trim().isEmpty()) {
+          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+          mapper.writeValue(response.getOutputStream(),
+              java.util.Collections.singletonMap("error", "missing required parameter 'type'"));
+          return null;
         }
+        List<Vehicle> result = vehicleService.getVehiclesByType(type.trim());
+        mapper.writeValue(response.getOutputStream(), result);
+        return null;
+      }
+
+      response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+      mapper.writeValue(response.getOutputStream(), java.util.Collections.singletonMap("error", "method not allowed"));
+      return null;
+    } catch (Exception ex) {
+      response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      mapper.writeValue(response.getOutputStream(),
+          java.util.Collections.singletonMap("error", "server error: " + ex.getMessage()));
+      return null;
     }
+  }
 }

@@ -13,24 +13,21 @@ import java.util.stream.Collectors;
  */
 public class VehicleServiceImpl implements VehicleService {
 
-    private final VehicleRepository vehicleRepository;
+  private final VehicleRepository vehicleRepository;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository) {
-        this.vehicleRepository = vehicleRepository;
-    }
+  public VehicleServiceImpl(VehicleRepository vehicleRepository) {
+    this.vehicleRepository = vehicleRepository;
+  }
 
-    @Override
-    public List<Vehicle> getVehiclesByType(String type) {
-        if (type == null || type.trim().isEmpty()) {
-            return java.util.Collections.emptyList();
-        }
+  @Override
+  public List<Vehicle> getVehiclesByType(String type) {
+  
+    // Use repository method that returns results (optionally already ordered)
+    List<Vehicle> vehicles = vehicleRepository.findByType(type);
 
-        // Use repository method that returns results (optionally already ordered)
-        List<Vehicle> vehicles = vehicleRepository.findByType(type);
-
-        // Sort in-memory by capacityWeight descending using Stream API
-        return vehicles.stream()
-                .sorted(Comparator.comparingDouble(Vehicle::getCapacityWeight).reversed())
-                .collect(Collectors.toList());
-    }
+    // Sort in-memory by capacityWeight descending using Stream API
+    return vehicles.stream()
+        .sorted(Comparator.comparingDouble(Vehicle::getCapacityWeight).reversed())
+        .collect(Collectors.toList());
+  }
 }
