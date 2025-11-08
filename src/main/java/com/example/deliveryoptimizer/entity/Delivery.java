@@ -29,6 +29,11 @@ public class Delivery {
     @javax.persistence.JoinColumn(name = "tour_id")
     private Tour tour;
 
+    // Many-to-one relation: a delivery can belong to one Customer
+    @javax.persistence.ManyToOne
+    @javax.persistence.JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public Delivery() {
     }
 
@@ -110,5 +115,13 @@ public class Delivery {
 
     public void setTour(Tour tour) {
         this.tour = tour;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
