@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- V1: baseline for the existing schema (tours, deliveries)
+         Keep changesets small and idempotent; each changeset has a commented rollback example. -->
+
+    <changeSet id="v1-1-create-tours" author="auto">
+        <comment>Create the `tours` table (baseline)</comment>
+        <createTable tableName="tours">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="DATE"/>
+            <column name="vehicle_id" type="BIGINT"/>
+        </createTable>
+
+        <rollback>
+            <!-- Rollback for this changeset: drop the table -->
+            <dropTable tableName="tours"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="v1-2-create-deliveries" author="auto">
+        <comment>Create the `deliveries` table (baseline)
+            Note: customer column will be added in v2 changelog.
+        </comment>
+        <createTable tableName="deliveries">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="weight" type="DOUBLE"/>
+            <column name="volume" type="DOUBLE"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="tour_id" type="BIGINT"/>
+        </createTable>
+
+        <!-- Add FK to link deliveries -> tours -->
+        <addForeignKeyConstraint baseTableName="deliveries"
+                                 baseColumnNames="tour_id"
+                                 constraintName="fk_deliveries_tour"
+                                 referencedTableName="tours"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="deliveries" constraintName="fk_deliveries_tour"/>
+            <dropTable tableName="deliveries"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

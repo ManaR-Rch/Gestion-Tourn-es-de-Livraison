@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- V2: Add Customer and DeliveryHistory entities and alter deliveries -> add customer_id -->
+
+    <changeSet id="v2-1-create-customers" author="auto">
+        <comment>Create `customers` table for Customer entity (id, name, address, lat/lon, preferred time slot)</comment>
+        <createTable tableName="customers">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="preferred_time_slot" type="VARCHAR(50)"/>
+        </createTable>
+
+        <rollback>
+            <!-- Rollback: if needed, drop customers table -->
+            <dropTable tableName="customers"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="v2-2-add-customer-to-deliveries" author="auto">
+        <comment>Add `customer_id` column to `deliveries` and create FK to `customers`</comment>
+        <addColumn tableName="deliveries">
+            <column name="customer_id" type="BIGINT"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="deliveries"
+                                 baseColumnNames="customer_id"
+                                 constraintName="fk_deliveries_customer"
+                                 referencedTableName="customers"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="deliveries" constraintName="fk_deliveries_customer"/>
+            <dropColumn tableName="deliveries" columnName="customer_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="v2-3-create-delivery-histories" author="auto">
+        <comment>Create `delivery_histories` table to track deliveries history with planned/actual times and delay</comment>
+        <createTable tableName="delivery_histories">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="tour_id" type="BIGINT"/>
+            <column name="date" type="DATE"/>
+            <column name="planned_time" type="TIME"/>
+            <column name="actual_time" type="TIME"/>
+            <column name="delay" type="BIGINT"/>
+            <column name="day_of_week" type="VARCHAR(20)"/>
+        </createTable>
+
+        <!-- FKs: to customers and tours -->
+        <addForeignKeyConstraint baseTableName="delivery_histories"
+                                 baseColumnNames="customer_id"
+                                 constraintName="fk_history_customer"
+                                 referencedTableName="customers"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="delivery_histories"
+                                 baseColumnNames="tour_id"
+                                 constraintName="fk_history_tour"
+                                 referencedTableName="tours"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="delivery_histories" constraintName="fk_history_customer"/>
+            <dropForeignKeyConstraint baseTableName="delivery_histories" constraintName="fk_history_tour"/>
+            <dropTable tableName="delivery_histories"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -35,7 +35,8 @@ public class DeliveryHistory {
     public DeliveryHistory() {
     }
 
-    public DeliveryHistory(Customer customer, Tour tour, LocalDate date, LocalTime plannedTime, LocalTime actualTime, Long delay, DayOfWeek dayOfWeek) {
+    public DeliveryHistory(Customer customer, Tour tour, LocalDate date, LocalTime plannedTime, LocalTime actualTime,
+            Long delay, DayOfWeek dayOfWeek) {
         this.customer = customer;
         this.tour = tour;
         this.date = date;
