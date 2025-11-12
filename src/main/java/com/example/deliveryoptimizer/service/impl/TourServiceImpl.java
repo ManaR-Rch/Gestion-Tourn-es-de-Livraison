@@ -1,5 +1,7 @@
 package com.example.deliveryoptimizer.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.example.deliveryoptimizer.entity.Delivery;
 import com.example.deliveryoptimizer.entity.Tour;
 import com.example.deliveryoptimizer.entity.Warehouse;
@@ -18,6 +20,7 @@ import java.util.Map;
  * Note: beans (optimizers and this service) should be configured in XML
  * (`applicationContext.xml`).
  */
+@Service
 public class TourServiceImpl implements TourService {
 
     private final TourOptimizer defaultOptimizer;

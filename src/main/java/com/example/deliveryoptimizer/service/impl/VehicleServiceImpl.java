@@ -1,5 +1,7 @@
 package com.example.deliveryoptimizer.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.example.deliveryoptimizer.entity.Vehicle;
 import com.example.deliveryoptimizer.repository.VehicleRepository;
 import com.example.deliveryoptimizer.service.VehicleService;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Vehicle service implementation. Wired via XML (no annotations).
  */
+@Service
 public class VehicleServiceImpl implements VehicleService {
 
   private final VehicleRepository vehicleRepository;
@@ -21,7 +24,7 @@ public class VehicleServiceImpl implements VehicleService {
 
   @Override
   public List<Vehicle> getVehiclesByType(String type) {
-  
+
     // Use repository method that returns results (optionally already ordered)
     List<Vehicle> vehicles = vehicleRepository.findByType(type);
 

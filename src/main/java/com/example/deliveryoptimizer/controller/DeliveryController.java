@@ -1,14 +1,15 @@
 package com.example.deliveryoptimizer.controller;
 
+import com.example.deliveryoptimizer.dto.DeliveryDto;
 import com.example.deliveryoptimizer.entity.Delivery;
+import com.example.deliveryoptimizer.mapper.DeliveryMapper;
 import com.example.deliveryoptimizer.repository.DeliveryRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import com.example.deliveryoptimizer.service.DeliveryService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,96 +24,67 @@ import java.util.Optional;
  * declared
  * in applicationContext.xml.
  */
-public class DeliveryController implements Controller {
+@RestController
+@RequestMapping("/api/deliveries")
+public class DeliveryController {
 
     private final DeliveryRepository deliveryRepository;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final DeliveryService deliveryService;
 
-    public DeliveryController(DeliveryRepository deliveryRepository) {
+    public DeliveryController(DeliveryRepository deliveryRepository, DeliveryService deliveryService) {
         this.deliveryRepository = deliveryRepository;
+        this.deliveryService = deliveryService;
     }
 
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        response.setContentType("application/json;charset=UTF-8");
-
-        String method = request.getMethod();
-        String path = request.getRequestURI();
-        // Expect paths like /api/deliveries or /api/deliveries/{id}
-
-        try {
-            if ("GET".equalsIgnoreCase(method) && path.equals("/api/deliveries")) {
-                List<Delivery> all = deliveryRepository.findAll();
-                mapper.writeValue(response.getOutputStream(), all);
-                return null;
-            }
-
-            if ("POST".equalsIgnoreCase(method) && path.equals("/api/deliveries")) {
-                Delivery d = mapper.readValue(request.getInputStream(), Delivery.class);
-                Delivery saved = deliveryRepository.save(d);
-                response.setStatus(HttpServletResponse.SC_CREATED);
-                mapper.writeValue(response.getOutputStream(), saved);
-                return null;
-            }
-
-            // Operations that require an id in the path
-            if (path.startsWith("/api/deliveries/")) {
-                String idStr = path.substring("/api/deliveries/".length());
-                Long id = tryParseId(idStr);
-                if (id == null) {
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    mapper.writeValue(response.getOutputStream(),
-                            java.util.Collections.singletonMap("error", "invalid id"));
-                    return null;
-                }
-
-                if ("PUT".equalsIgnoreCase(method)) {
-                    Optional<Delivery> existing = deliveryRepository.findById(id);
-                    if (!existing.isPresent()) {
-                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                        mapper.writeValue(response.getOutputStream(),
-                                java.util.Collections.singletonMap("error", "not found"));
-                        return null;
-                    }
-                    Delivery upd = mapper.readValue(request.getInputStream(), Delivery.class);
-                    Delivery e = existing.get();
-                    // simple field-by-field update
-                    e.setLatitude(upd.getLatitude());
-                    e.setLongitude(upd.getLongitude());
-                    e.setWeight(upd.getWeight());
-                    e.setVolume(upd.getVolume());
-                    e.setStatus(upd.getStatus());
-                    Delivery saved = deliveryRepository.save(e);
-                    mapper.writeValue(response.getOutputStream(), saved);
-                    return null;
-                }
-
-                if ("DELETE".equalsIgnoreCase(method)) {
-                    deliveryRepository.deleteById(id);
-                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                    return null;
-                }
-            }
-
-            // If no rule matched
-            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            mapper.writeValue(response.getOutputStream(),
-                    java.util.Collections.singletonMap("error", "method not allowed"));
-            return null;
-
-        } catch (IOException ex) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            mapper.writeValue(response.getOutputStream(),
-                    java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
-            return null;
+    // GET /api/deliveries
+    // Optional params: status, page, size
+    @GetMapping
+    public ResponseEntity<?> listAll(
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "20") int size) {
+        if (status != null && !status.isBlank()) {
+            Page<DeliveryDto> pageResult = deliveryService.getDeliveriesByStatus(status, page, size);
+            return ResponseEntity.ok(pageResult);
         }
+        // no status: return paginated list of all deliveries as DTOs
+        Page<DeliveryDto> pageResult = deliveryService.getAllDeliveries(page, size);
+        return ResponseEntity.ok(pageResult);
     }
 
-    private Long tryParseId(String s) {
-        try {
-            return Long.parseLong(s);
-        } catch (Exception e) {
-            return null;
+    // POST /api/deliveries
+    @PostMapping
+    public ResponseEntity<Delivery> create(@RequestBody Delivery delivery) {
+        Delivery saved = deliveryRepository.save(delivery);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    // PUT /api/deliveries/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody DeliveryDto updDto) {
+        Optional<Delivery> existing = deliveryRepository.findById(id);
+        if (!existing.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
+        Delivery toUpdate = existing.get();
+        // Map fields from DTO to entity; keep id from path
+        Delivery incoming = DeliveryMapper.toEntity(updDto);
+        // apply allowed updates
+        toUpdate.setLatitude(incoming.getLatitude());
+        toUpdate.setLongitude(incoming.getLongitude());
+        toUpdate.setWeight(incoming.getWeight());
+        toUpdate.setVolume(incoming.getVolume());
+        toUpdate.setStatus(incoming.getStatus());
+
+        Delivery saved = deliveryService.save(toUpdate);
+        DeliveryDto resp = DeliveryMapper.toDto(saved);
+        return ResponseEntity.ok(resp);
+    }
+
+    // DELETE /api/deliveries/{id}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deliveryRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

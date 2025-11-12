@@ -77,45 +77,10 @@
     </bean>
 
     <!-- Repositories are created automatically by Spring Data; controller bean references them by name -->
-    <bean id="tourController" class="com.example.deliveryoptimizer.controller.TourController">
-        <constructor-arg ref="deliveryRepository"/>
-        <constructor-arg ref="warehouseRepository"/>
-        <constructor-arg ref="tourService"/>
-    </bean>
 
-    <!-- Map URL to controller bean -->
-    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="order" value="0" />
-        <property name="mappings">
-            <props>
-                <prop key="/api/tours/optimize">tourController</prop>
-                <prop key="/api/deliveries">deliveryController</prop>
-                <prop key="/api/deliveries/*">deliveryController</prop>
-                <prop key="/api/vehicles/by-type">vehicleController</prop>
-                <prop key="/api/warehouses">warehouseController</prop>
-            </props>
-        </property>
-    </bean>
-
-    <!-- Adapter to invoke Controller implementations -->
-    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
-
-    <!-- Delivery and Warehouse controller beans -->
-    <bean id="deliveryController" class="com.example.deliveryoptimizer.controller.DeliveryController">
-        <constructor-arg ref="deliveryRepository"/>
-    </bean>
-
-    <bean id="warehouseController" class="com.example.deliveryoptimizer.controller.WarehouseController">
-        <constructor-arg ref="warehouseRepository"/>
-    </bean>
-
-    <!-- Vehicle service and controller (XML-wired) -->
-    <bean id="vehicleService" class="com.example.deliveryoptimizer.service.impl.VehicleServiceImpl">
-        <constructor-arg ref="vehicleRepository"/>
-    </bean>
-
-    <bean id="vehicleController" class="com.example.deliveryoptimizer.controller.VehicleController">
-        <constructor-arg ref="vehicleService"/>
-    </bean>
+    <!-- Controllers are now annotated (@RestController). Remove legacy SimpleUrlHandlerMapping
+         and XML bean definitions for controllers to avoid duplicate bean registrations.
+         Services and repositories remain managed by Spring Data and component scanning.
+    -->
 
 </beans>

@@ -1,5 +1,7 @@
 package com.example.deliveryoptimizer.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.example.deliveryoptimizer.entity.Delivery;
 import com.example.deliveryoptimizer.entity.Warehouse;
 import com.example.deliveryoptimizer.service.TourOptimizer;
@@ -17,6 +19,7 @@ import java.util.*;
  * Note: This is a straightforward educational implementation (not
  * production-grade).
  */
+@Service
 public class ClarkeWrightOptimizer implements TourOptimizer {
 
     // Simple capacity used for demonstration (kg). Replace by vehicle-specific
@@ -33,7 +36,6 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
 
         int n = deliveries.size();
 
-        // Initial routes: each delivery is its own route (sequence of deliveries)
         List<List<Delivery>> routes = new ArrayList<>();
         List<Double> routeWeights = new ArrayList<>();
         for (Delivery d : deliveries) {
@@ -43,7 +45,6 @@ public class ClarkeWrightOptimizer implements TourOptimizer {
             routeWeights.add(d.getWeight());
         }
 
-        // Precompute distances between depot and deliveries and between deliveries
         double[] distDepot = new double[n];
         double[][] dist = new double[n][n];
         for (int i = 0; i < n; i++) {

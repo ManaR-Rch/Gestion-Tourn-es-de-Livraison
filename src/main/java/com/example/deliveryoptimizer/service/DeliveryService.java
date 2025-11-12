@@ -1,6 +1,8 @@
 package com.example.deliveryoptimizer.service;
 
+import com.example.deliveryoptimizer.dto.DeliveryDto;
 import com.example.deliveryoptimizer.entity.Delivery;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +23,9 @@ public interface DeliveryService {
   Delivery save(Delivery delivery);
 
   void deleteById(Long id);
+
+  Page<DeliveryDto> getDeliveriesByStatus(String status, int page, int size);
+
+  Page<DeliveryDto> getAllDeliveries(int page, int size);
+
 }

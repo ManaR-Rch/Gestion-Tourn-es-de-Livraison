@@ -5,16 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4769db8-1b12-4cc9-ad24-6e760ea82e4b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/DeliveryOptimizerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/DeliveryOptimizerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/DeliveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/DeliveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/TourController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/TourController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/VehicleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/VehicleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/WarehouseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/controller/WarehouseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/DeliveryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/DeliveryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/TourRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/TourRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/VehicleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/VehicleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/WarehouseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/repository/WarehouseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/DeliveryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/DeliveryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/DeliveryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/NearestNeighborOptimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/NearestNeighborOptimizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/TourServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/TourServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/VehicleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/deliveryoptimizer/service/impl/VehicleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/DeliveryOptimizerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/DeliveryOptimizerApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/DeliveryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/DeliveryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/TourController$OptimizeRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/TourController$OptimizeRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/TourController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/TourController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/VehicleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/VehicleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/WarehouseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/controller/WarehouseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/DeliveryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/DeliveryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/TourRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/TourRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/VehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/VehicleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/WarehouseRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/repository/WarehouseRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/DeliveryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/DeliveryService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/VehicleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/VehicleService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer$1Saving.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer$1Saving.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer$RoutePos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer$RoutePos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/ClarkeWrightOptimizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/DeliveryServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/DeliveryServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/NearestNeighborOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/NearestNeighborOptimizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/TourServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/TourServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/VehicleServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/deliveryoptimizer/service/impl/VehicleServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/demo-xml-config-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/demo-xml-config-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/demo-xml-config-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/demo-xml-config-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,32 +61,32 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="34w9X6fdd2eYeWnZitUq5JwYCTE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/youco/Desktop/delivery-test",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/youco/Desktop/delivery-test&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="delivery-test" />
@@ -89,6 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1762113806236</updated>
       <workItem from="1762113808223" duration="18536000" />
+      <workItem from="1762799834690" duration="5938000" />
     </task>
     <servers />
   </component>

@@ -2,6 +2,8 @@ com\example\deliveryoptimizer\repository\WarehouseRepository.class
 com\example\demo\DemoApplication.class
 com\example\deliveryoptimizer\controller\TourController.class
 com\example\deliveryoptimizer\DeliveryOptimizerApplication.class
+com\example\deliveryoptimizer\service\VehicleService.class
+com\example\deliveryoptimizer\service\impl\DeliveryServiceImpl.class
 com\example\deliveryoptimizer\service\impl\NearestNeighborOptimizer.class
 com\example\deliveryoptimizer\controller\DeliveryController.class
 com\example\deliveryoptimizer\controller\TourController$OptimizeRequest.class
@@ -13,13 +15,16 @@ com\example\deliveryoptimizer\entity\Delivery.class
 com\example\deliveryoptimizer\entity\Vehicle.class
 com\example\deliveryoptimizer\mapper\DeliveryMapper.class
 com\example\deliveryoptimizer\entity\Tour.class
+com\example\deliveryoptimizer\service\DeliveryService.class
 com\example\deliveryoptimizer\service\TourService.class
 com\example\deliveryoptimizer\service\impl\ClarkeWrightOptimizer.class
 com\example\deliveryoptimizer\controller\WarehouseController.class
 com\example\deliveryoptimizer\service\TourOptimizer.class
 com\example\deliveryoptimizer\repository\VehicleRepository.class
+com\example\deliveryoptimizer\service\impl\VehicleServiceImpl.class
 com\example\deliveryoptimizer\repository\DeliveryRepository.class
 com\example\deliveryoptimizer\util\DistanceUtils.class
 com\example\deliveryoptimizer\entity\Warehouse.class
 com\example\deliveryoptimizer\config\OpenApiConfig.class
+com\example\deliveryoptimizer\controller\VehicleController.class
 com\example\deliveryoptimizer\service\impl\TourServiceImpl.class

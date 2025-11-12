@@ -7,84 +7,81 @@ import com.example.deliveryoptimizer.mapper.DeliveryMapper;
 import com.example.deliveryoptimizer.repository.DeliveryRepository;
 import com.example.deliveryoptimizer.repository.WarehouseRepository;
 import com.example.deliveryoptimizer.service.TourService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
- * Controller XML-configured that exposes POST /api/tours/optimize
- * Request body example: { "warehouseId": 1, "deliveryIds": [1,2,3],
- * "optimizer": "CLARKE" }
+ * Annotated REST controller for Tour optimization.
+ * Replaces the legacy Controller implementation and exposes POST
+ * /api/tours/optimize
+ *
+ * Note: services/repositories are left unchanged and can still be configured in
+ * XML.
  */
-public class TourController implements Controller {
+@RestController
+@RequestMapping("/api/tours")
+public class TourController {
 
-  private final DeliveryRepository deliveryRepository;
-  private final WarehouseRepository warehouseRepository;
-  private final TourService tourService;
-  private final ObjectMapper mapper = new ObjectMapper();
+    private final DeliveryRepository deliveryRepository;
+    private final WarehouseRepository warehouseRepository;
+    private final TourService tourService;
 
-  public TourController(DeliveryRepository deliveryRepository, WarehouseRepository warehouseRepository,
-      TourService tourService) {
-    this.deliveryRepository = deliveryRepository;
-    this.warehouseRepository = warehouseRepository;
-    this.tourService = tourService;
-  }
-
-  private static class OptimizeRequest {
-    public Long warehouseId;
-    public List<Long> deliveryIds = new ArrayList<>();
-    public String optimizer;
-  }
-
-  @Override
-  public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    if (!"POST".equalsIgnoreCase(request.getMethod())) {
-      response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-      return null;
+    public TourController(DeliveryRepository deliveryRepository,
+            WarehouseRepository warehouseRepository,
+            TourService tourService) {
+        this.deliveryRepository = deliveryRepository;
+        this.warehouseRepository = warehouseRepository;
+        this.tourService = tourService;
     }
 
-    response.setContentType("application/json;charset=UTF-8");
-
-    try {
-      OptimizeRequest req = mapper.readValue(request.getInputStream(), OptimizeRequest.class);
-
-      // load warehouse
-      Warehouse warehouse = null;
-      if (req.warehouseId != null) {
-        Optional<Warehouse> wOpt = warehouseRepository.findById(req.warehouseId);
-        if (wOpt.isPresent())
-          warehouse = wOpt.get();
-      }
-
-      // load deliveries
-      List<Delivery> deliveries = new ArrayList<>();
-      if (req.deliveryIds != null && !req.deliveryIds.isEmpty()) {
-        Iterable<Delivery> it = deliveryRepository.findAllById(req.deliveryIds);
-        it.forEach(deliveries::add);
-      }
-
-      List<Delivery> optimized = tourService.getOptimizedTour(deliveries, req.optimizer, null);
-
-      // map to DTOs
-      List<DeliveryDto> dtos = new ArrayList<>();
-      for (Delivery d : optimized)
-        dtos.add(DeliveryMapper.toDto(d));
-
-      mapper.writeValue(response.getOutputStream(), dtos);
-      return null;
-
-    } catch (IOException ex) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      mapper.writeValue(response.getOutputStream(),
-          java.util.Collections.singletonMap("error", "invalid JSON or missing fields"));
-      return null;
+    public static class OptimizeRequest {
+        public Long warehouseId;
+        public List<Long> deliveryIds = new ArrayList<>();
+        public String optimizer;
     }
-  }
+
+    @PostMapping("/optimize")
+    public ResponseEntity<?> optimize(@RequestBody OptimizeRequest req) {
+        try {
+            // load warehouse if provided
+            Warehouse warehouse = null;
+            if (req.warehouseId != null) {
+                Optional<Warehouse> wOpt = warehouseRepository.findById(req.warehouseId);
+                if (wOpt.isPresent()) {
+                    warehouse = wOpt.get();
+                }
+            }
+
+            // load deliveries
+            List<Delivery> deliveries = new ArrayList<>();
+            if (req.deliveryIds != null && !req.deliveryIds.isEmpty()) {
+                deliveryRepository.findAllById(req.deliveryIds).forEach(deliveries::add);
+            }
+
+            // call existing service (keeps business logic unchanged)
+            List<Delivery> optimized = tourService.getOptimizedTour(deliveries, req.optimizer, null);
+
+            // map to DTOs using existing DeliveryMapper
+            List<DeliveryDto> dtos = optimized.stream()
+                    .map(DeliveryMapper::toDto)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(dtos);
+
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "invalid JSON or missing fields"));
+        }
+    }
+
 }

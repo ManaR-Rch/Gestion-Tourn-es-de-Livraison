@@ -1,5 +1,7 @@
 package com.example.deliveryoptimizer.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.example.deliveryoptimizer.entity.Delivery;
 import com.example.deliveryoptimizer.entity.Warehouse;
 import com.example.deliveryoptimizer.service.TourOptimizer;
@@ -19,6 +21,7 @@ import java.util.List;
  *
  * Complexity: O(n^2) in number of deliveries.
  */
+@Service
 public class NearestNeighborOptimizer implements TourOptimizer {
 
     @Override
