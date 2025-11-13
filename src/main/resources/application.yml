@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+# Common application settings can go here (overridden by profile-specific files)
+server:
+  port: 8080
+
+# SpringDoc defaults (can be overridden per profile)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true

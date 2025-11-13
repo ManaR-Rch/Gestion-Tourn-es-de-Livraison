@@ -1,0 +1,30 @@
+# QA profile: example configuration for a real DB (PostgreSQL shown)
+spring:
+  datasource:
+    # PostgreSQL example - uncomment and set real values for QA/CI
+    url: jdbc:postgresql://localhost:5432/your_db
+    driver-class-name: org.postgresql.Driver
+    username: your_user
+    password: your_password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    enabled: true
+
+# MySQL alternative (comment out PostgreSQL and uncomment the block below):
+# spring:
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/your_db?useSSL=false&serverTimezone=UTC
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#     username: your_user
+#     password: your_password
+#   jpa:
+#     hibernate:
+#       ddl-auto: validate
+#   liquibase:
+#     enabled: true
+
+logging:
+  level:
+    root: INFO
